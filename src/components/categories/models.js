@@ -24,6 +24,18 @@ module.exports = async () => {
         await DBQuery(createProductFieldsTable);
 
         // await DBQuery(enterMockData);
+        await DBQuery(`INSERT INTO categories (label) VALUES ("Transport")`);
+        await DBQuery(`INSERT INTO categories (label) VALUES ("Real estate")`);
+        // await DBQuery(`INSERT INTO subcategories (label, category_id) VALUES ("Car", 1)`);
+        // await DBQuery(`INSERT INTO subcategories (label, category_id) VALUES ("Bus", 1)`);
+        // await DBQuery(`INSERT INTO subcategories (label, category_id) VALUES ("House", 2);`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Horse Power", 1)`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Price", 1)`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Speed", 1)`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Weight", 2)`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Capacity", 3)`);
+        // await DBQuery(`INSERT INTO productFieldsTable (label, subcategory_id) VALUES ("Price", 3)`);
+
         const enterMockData  = `
             INSERT INTO categories (label) VALUES ("Transport");
             INSERT INTO categories (label) VALUES ("Real estate");

@@ -7,9 +7,9 @@ class ProductsService extends Service {
     constructor(...fields) {
         super(...fields);
     }
-    async create(body) {
+    async create(body, userID) {
         try {
-            const { categoryID, title, fields, creatorID: userID } = body;
+            const { categoryID, title, fields } = body;
             const { insertId: productID } = await DBQuery(
                 `INSERT INTO products (category_id, title, user_id) 
                 VALUES (${connection.escape(categoryID)}, ${connection.escape(title)}, ${connection.escape(userID)})`

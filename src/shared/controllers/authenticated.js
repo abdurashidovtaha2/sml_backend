@@ -46,10 +46,8 @@ class AuthenticatedController {
             const columns = Object.keys(body);
             
             if (!compareArrays(columns, desiredColumns)) throw({ statusCode: statusCodes.BAD_REQUEST });
-            
-            body = { ...body, creatorID: userID };
 
-            const message = await this.service.create(body);
+            const message = await this.service.create(body, userID);
             
             return res.status(message.statusCode).send(message);
         } catch (err) {

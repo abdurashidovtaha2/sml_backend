@@ -1,4 +1,5 @@
-GET http://localhost:8000/users/token/dondon
+# GET http://localhost:8000/users/token/dondon
+GET https://sml-backend.herokuapp.com/users/token
 
 ###
 
@@ -8,12 +9,13 @@ Authorization: dondon
 ###
 
 POST http://localhost:8000/users/signup
+# POST https://sml-backend.herokuapp.com/users/signup
 Content-Type: application/json
 
 {
     "name": "taha",
     "surname": "baha",
-    "email": "2314@gmail.com",
+    "email": "abdurashidovtaha2@gmail.com",
     "password": "hey"
 }
 
@@ -53,15 +55,15 @@ Authorization: dondon
     "fields": [
         {
             "id": 1,
-            "value": 900
+            "value": 1200
         },
         {
             "id": 2,
-            "value": "200000 $"
+            "value": "20207 $"
         },
         {
             "id": 3,
-            "value": "700 km/h"
+            "value": "632 km/h"
         }
     ]
 }
