@@ -30,6 +30,7 @@ Content-Type: application/json
 }
 
 ###
+
 # POST http://localhost:8000/users/login
 POST https://sml-backend.herokuapp.com/users/login
 Content-Type: application/json
@@ -40,44 +41,44 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/products/categories
+# GET http://localhost:8000/products/categories
+GET  https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-GET http://localhost:8000/products
-
-###
-POST http://localhost:8000/products
+# POST http://localhost:8000/products
+POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
-Authorization: dondon
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 {
-    "categoryID": 1,
-    "title": "mycarferrari",
+    "categoryID": 95,
+    "title": "ferrari",
     "fields": [
         {
-            "id": 1,
+            "id": 5,
             "value": 1200
         },
         {
-            "id": 2,
+            "id": 15,
             "value": "20207 $"
         },
         {
-            "id": 3,
+            "id": 25,
             "value": "632 km/h"
         }
     ]
 }
 
 ###
-GET http://localhost:8000/products
-Authorization: dondon
+# GET http://localhost:8000/products
+GET https://sml-backend.herokuapp.com/products
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 
 ###
 GET http://localhost:8000/products/accepted
-Authorization: dondon
+Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 
 ###
@@ -90,14 +91,14 @@ Authorization: dondon
 
 ###
 GET http://localhost:8000/products/admin
-Authorization: 3379a566-1e7b-4bd5-aaf4-ea0196bf14d7
+Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
 PATCH  http://localhost:8000/products/admin/product
-Authorization: 3379a566-1e7b-4bd5-aaf4-ea0196bf14d7
+Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 Content-Type: application/json
 
 {
-    "id": 1,
-    "value": 3
+    "id": 5,
+    "value": 2
 }

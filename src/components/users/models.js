@@ -6,7 +6,7 @@ module.exports = async () => {
             id int primary key auto_increment not null,
             email varchar(255) not null,
             name varchar(255) not null,
-            surname varchar(255) not null,
+            surname varchar(255) DEFAULT "" not null,
             verified int DEFAULT 0 not null,
             password varchar(255) not null,
             admin bool DEFAULT false not null,

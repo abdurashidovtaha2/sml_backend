@@ -10,7 +10,7 @@ class UsersController extends AuthenticatedController {
         this.verify = this.verify.bind(this);
     }
     async create(req, res) {
-        const desiredColumns = [ "name", "surname", "email", "password" ];
+        const desiredColumns = [ "name", "email", "password" ];
         if (req.body.password) req.body.password = crypto.createHmac("sha256", req.body.password).digest("hex");
 
         await super.create(req, res, desiredColumns, true);
