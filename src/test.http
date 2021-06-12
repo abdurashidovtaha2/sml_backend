@@ -1,0 +1,99 @@
+GET http://localhost:8000/users/token/dondon
+
+###
+
+GET http://localhost:8000/users/65
+Authorization: dondon
+
+###
+
+POST http://localhost:8000/users/signup
+Content-Type: application/json
+
+{
+    "name": "taha",
+    "surname": "baha",
+    "email": "2314@gmail.com",
+    "password": "hey"
+}
+
+###
+
+POST http://localhost:8000/users/signup/code
+Content-Type: application/json
+
+{
+    "code": "015bbd0d-0a19-4e51-8d04-2e7456d66223"
+}
+
+###
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+    "email": "231@gmail.com",
+    "password": "hey"
+}
+
+###
+GET http://localhost:8000/products/categories
+Authorization: dondon
+
+###
+GET http://localhost:8000/products
+
+###
+POST http://localhost:8000/products
+Content-Type: application/json
+Authorization: dondon
+
+{
+    "categoryID": 1,
+    "title": "mycarferrari",
+    "fields": [
+        {
+            "id": 1,
+            "value": 900
+        },
+        {
+            "id": 2,
+            "value": "200000 $"
+        },
+        {
+            "id": 3,
+            "value": "700 km/h"
+        }
+    ]
+}
+
+###
+GET http://localhost:8000/products
+Authorization: dondon
+
+
+###
+GET http://localhost:8000/products/accepted
+Authorization: dondon
+
+
+###
+GET http://localhost:8000/products/declined
+Authorization: dondon
+
+###
+GET http://localhost:8000/products/que
+Authorization: dondon
+
+###
+GET http://localhost:8000/products/admin
+Authorization: 3379a566-1e7b-4bd5-aaf4-ea0196bf14d7
+
+###
+PATCH  http://localhost:8000/products/admin/product
+Authorization: 3379a566-1e7b-4bd5-aaf4-ea0196bf14d7
+Content-Type: application/json
+
+{
+    "id": 1,
+    "value": 3
+}
