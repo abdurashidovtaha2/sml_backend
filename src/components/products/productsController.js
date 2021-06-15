@@ -1,3 +1,5 @@
+const errorCodes = require("../../enums/errorCodes");
+const statusCodes = require("../../enums/statusCodes");
 const AuthenticatedController = require("../../shared/controllers/authenticated");
 const DBQuery = require("../../utils/DBQuery");
 const productsService = require("./productsService");
@@ -8,9 +10,27 @@ class ProductsController extends AuthenticatedController {
         this.getAll = this.getAll.bind(this);
         this.getAllAdmin = this.getAllAdmin.bind(this);
         this.updateProductStatus = this.updateProductStatus.bind(this);
+        this.insertPicture = this.insertPicture.bind(this);
+    }
+    async insertPicture(req, res) {
+        try {
+            const token = req.headers.authorization;            
+
+            if (!token) throw({ statusCode: statusCodes.BAD_REQUEST, err: errorCodes.DENIED });
+
+            const userID = await this.service.checkToken(token);
+
+            await this.service.insertPicture(req, res);
+        } catch (err) {
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("products / insert picture", err);
+        }
     }
     async create(req, res) {
-        const desiredColumns = [ "categoryID", "title", "fields" ];
+        const desiredColumns = [ "categoryID", "title", "fields", "price", "bargain", "pictures" ];
 
         await super.create(req, res, desiredColumns);
 
@@ -32,7 +52,7 @@ class ProductsController extends AuthenticatedController {
             if (err.statusCode) {
                 return res.status(err.statusCode).send(err);
             }
-            res.status(500).send("err");
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("products / getall", err);
         }
     }
@@ -50,7 +70,7 @@ class ProductsController extends AuthenticatedController {
             if (err.statusCode) {
                 return res.status(err.statusCode).send(err);
             }
-            res.status(500).send("err");
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("products / getalladmin", err);
         }
     }
@@ -69,7 +89,7 @@ class ProductsController extends AuthenticatedController {
             if (err.statusCode) {
                 return res.status(err.statusCode).send(err);
             }
-            res.status(500).send("err");
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("products / changeproductstatus", err);
         }
     }

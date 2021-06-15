@@ -46,34 +46,40 @@ GET  https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-# POST http://localhost:8000/products
-POST https://sml-backend.herokuapp.com/products
+POST http://localhost:8000/products
+# POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
-Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+Authorization: dondon
 
 {
-    "categoryID": 95,
-    "title": "ferrari",
+    "categoryID": 1,
+    "title": "jaga",
+    "price": "300000",
+    "bargain": true,
+    "pictures": [
+        "picture-1623735984603.jpg",
+        "picture-1623736118813.jpg"
+    ],
     "fields": [
         {
-            "id": 5,
+            "id": 1,
             "value": 1200
         },
         {
-            "id": 15,
+            "id": 2,
             "value": "20207 $"
         },
         {
-            "id": 25,
+            "id": 3,
             "value": "632 km/h"
         }
     ]
 }
 
 ###
-# GET http://localhost:8000/products
-GET https://sml-backend.herokuapp.com/products
-Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+GET http://localhost:8000/products
+# GET https://sml-backend.herokuapp.com/products
+Authorization: dondon
 
 
 ###

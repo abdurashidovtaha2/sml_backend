@@ -15,10 +15,15 @@ const buildSQLUpdateQuery = (updateParams) => {
     const fields = Object.keys(updateParams);
     const values = Object.values(updateParams).map(val => connection.escape(val));
     return fields.reduce((acc, cur, idx) => { return acc + `${cur}=${values[idx]}${idx !== (fields.length-1) ? ", " : ""}` }, "");
-}
+};
+
+const changeBackSlashes = (initString) => {
+    return initString.split("").map(val => val === "\\" ? "/" : val ).join("");
+};
 
 module.exports = {
     compareArrays,
+    changeBackSlashes,
     buildSQLSearchQuery,
     buildSQLUpdateQuery
 }

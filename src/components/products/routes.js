@@ -19,4 +19,6 @@ router.get("/admin", productsController.getAllAdmin);
 
 router.patch("/admin/product", productsController.updateProductStatus);
 
+router.post("/picture", productsController.insertPicture)
+
 module.exports = router;
