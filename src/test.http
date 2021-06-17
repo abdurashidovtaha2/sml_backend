@@ -46,8 +46,8 @@ GET  https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-POST http://localhost:8000/products
-# POST https://sml-backend.herokuapp.com/products
+# POST http://localhost:8000/products
+POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
@@ -58,6 +58,7 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
     "bargain": true,
     "description": "Hama tenjay, tovar devonaashay",
     "pictures": [
+        "picture-1623935529537.png"
     ],
     "fields": [
         {
@@ -76,8 +77,8 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 }
 
 ###
-GET http://localhost:8000/products
-# GET https://sml-backend.herokuapp.com/products
+# GET http://localhost:8000/products
+GET https://sml-backend.herokuapp.com/products
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 
@@ -107,3 +108,7 @@ Content-Type: application/json
     "id": 5,
     "value": 2
 }
+
+###
+GET http://localhost:8000/products/255
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524

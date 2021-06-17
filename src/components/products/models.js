@@ -28,6 +28,7 @@ module.exports = async () => {
             product_id int not null,
             FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
         )`;
+        // await DBQuery(`DELETE FROM products`);
 
         await DBQuery(createProductsTable);
         await DBQuery(createFieldProductsTable);

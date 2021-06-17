@@ -65,6 +65,34 @@ class ProductsService extends Service {
             throw(err);
         }
     }
+    async getSingle(searchParams) {
+        try {
+            const { id: productID } = searchParams;
+            const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
+
+            if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
+
+            const result = await Promise.all(products.map(async (product) => {
+                const { id: productID, category_id: categoryID, title, status, price, description, bargain, } = product;
+                const pictures = await DBQuery(`
+                    SELECT * FROM productpictures WHERE product_id = ${connection.escape(productID)}
+                `);
+
+                const fields =  await DBQuery(`
+                    SELECT productfields.id, productfields.label, fieldproducts.value
+                    FROM fieldproducts JOIN productfields
+                    ON fieldproducts.product_id = ${connection.escape(productID)}
+                    WHERE fieldproducts.field_id=productfields.id
+                `);
+
+                return { categoryID, productID, status, price, description, bargain, title, pictures, fields };
+            }));
+
+            return { statusCode: statusCodes.OK, product: result[0] };
+        } catch (err) {
+            throw(err);
+        }
+    }
     async getAll(userID, status, admin) {
         try {
             let products = await DBQuery(`SELECT * FROM products WHERE user_id=${connection.escape(userID)} AND status=${connection.escape(status)}`);;

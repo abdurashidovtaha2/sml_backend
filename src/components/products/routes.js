@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.post("/", productsController.create);
 
+router.get("/:id", (req, res) => productsController.getSingle(req, res));
+
 router.get("/", (req, res) => productsController.getAll(req, res));
 
 router.get("/que", (req, res) => productsController.getAll(req, res, 1));
