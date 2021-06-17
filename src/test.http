@@ -49,28 +49,27 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 POST http://localhost:8000/products
 # POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
-Authorization: dondon
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 {
-    "categoryID": 1,
+    "categoryID": 95,
     "title": "jaga",
     "price": "300000",
     "bargain": true,
+    "description": "Hama tenjay, tovar devonaashay",
     "pictures": [
-        "picture-1623735984603.jpg",
-        "picture-1623736118813.jpg"
     ],
     "fields": [
         {
-            "id": 1,
+            "id": 5,
             "value": 1200
         },
         {
-            "id": 2,
+            "id": 15,
             "value": "20207 $"
         },
         {
-            "id": 3,
+            "id": 25,
             "value": "632 km/h"
         }
     ]
@@ -79,7 +78,7 @@ Authorization: dondon
 ###
 GET http://localhost:8000/products
 # GET https://sml-backend.herokuapp.com/products
-Authorization: dondon
+Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 
 ###

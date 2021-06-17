@@ -10,6 +10,7 @@ module.exports = async () => {
             title varchar(255) not null,
             price varchar(255)  not null,
             bargain bool DEFAULT false not null,
+            description text not null,
             FOREIGN KEY (category_id) REFERENCES subcategories(id) ON DELETE CASCADE,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )`;

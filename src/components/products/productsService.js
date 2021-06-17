@@ -34,12 +34,13 @@ class ProductsService extends Service {
     }
     async create(body, userID) {
         try {
-            const { categoryID, pictures, title, fields, price, bargain } = body;
+            const { categoryID, pictures, title, fields, price, bargain, description } = body;
             const { insertId: productID } = await DBQuery(
-                `INSERT INTO products (category_id, title, user_id, price, bargain) 
+                `INSERT INTO products (category_id, title, user_id, price, bargain, description) 
                 VALUES (${connection.escape(categoryID)}, 
                 ${connection.escape(title)}, ${connection.escape(userID)},
-                ${connection.escape(price)}, ${connection.escape(bargain)})`
+                ${connection.escape(price)}, ${connection.escape(bargain)},
+                ${connection.escape(description)})`
             );
             await Promise.all(pictures.map(async (pictureID) => {
                 const link = `${environment.port}/${pictureID}`;
@@ -74,7 +75,7 @@ class ProductsService extends Service {
                 products = await DBQuery(`SELECT * FROM products WHERE status=1`);
             }
             const result = await Promise.all(products.map(async (product) => {
-                const { id: productID, category_id: categoryID, title, status, price, bargain, } = product;
+                const { id: productID, category_id: categoryID, title, status, price, description, bargain, } = product;
                 const pictures = await DBQuery(`
                     SELECT * FROM productpictures WHERE product_id = ${connection.escape(productID)}
                 `);
@@ -86,7 +87,7 @@ class ProductsService extends Service {
                     WHERE fieldproducts.field_id=productfields.id
                 `);
 
-                return { categoryID, productID, status, price, bargain, title, pictures, fields };
+                return { categoryID, productID, status, price, description, bargain, title, pictures, fields };
             }));
 
             return { statusCode: statusCodes.OK, products: result };
