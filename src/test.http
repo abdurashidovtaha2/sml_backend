@@ -97,6 +97,7 @@ Authorization: dondon
 
 ###
 GET http://localhost:8000/products/admin
+# GET https://sml-backend.herokuapp.com/products/admin
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
@@ -110,5 +111,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/products/255
+GET http://localhost:8000/products/single/255
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524

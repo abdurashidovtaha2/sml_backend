@@ -69,7 +69,7 @@ class ProductsService extends Service {
         try {
             const { id: productID } = searchParams;
             const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
-
+            
             if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
 
             const result = await Promise.all(products.map(async (product) => {
@@ -94,7 +94,7 @@ class ProductsService extends Service {
         }
     }
     async getAll(userID, status, admin) {
-        try {
+        try {   
             let products = await DBQuery(`SELECT * FROM products WHERE user_id=${connection.escape(userID)} AND status=${connection.escape(status)}`);;
             if (Number(status) === 0) {
                 products = await DBQuery(`SELECT * FROM products WHERE user_id=${connection.escape(userID)}`);
