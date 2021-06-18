@@ -34,13 +34,15 @@ class ProductsService extends Service {
     }
     async create(body, userID) {
         try {
-            const { categoryID, pictures, title, fields, price, bargain, description } = body;
+            const { categoryID, pictures, title, fields, price, bargain, description, phoneNumber, userName } = body;
             const { insertId: productID } = await DBQuery(
-                `INSERT INTO products (category_id, title, user_id, price, bargain, description) 
+                `INSERT INTO products (category_id, title, user_id, price, bargain, description,
+                phoneNumber, userName) 
                 VALUES (${connection.escape(categoryID)}, 
                 ${connection.escape(title)}, ${connection.escape(userID)},
                 ${connection.escape(price)}, ${connection.escape(bargain)},
-                ${connection.escape(description)})`
+                ${connection.escape(description)}, ${connection.escape(phoneNumber)},
+                ${connection.escape(userName)})`
             );
             await Promise.all(pictures.map(async (pictureID) => {
                 const link = `${environment.port}/${pictureID}`;
@@ -73,7 +75,7 @@ class ProductsService extends Service {
             if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
 
             const result = await Promise.all(products.map(async (product) => {
-                const { id: productID, category_id: categoryID, title, status, price, description, bargain, } = product;
+                const { id: productID, category_id: categoryID, title, status, price, description, bargain, phoneNumber, userName } = product;
                 const pictures = await DBQuery(`
                     SELECT * FROM productpictures WHERE product_id = ${connection.escape(productID)}
                 `);
@@ -85,7 +87,7 @@ class ProductsService extends Service {
                     WHERE fieldproducts.field_id=productfields.id
                 `);
 
-                return { categoryID, productID, status, price, description, bargain, title, pictures, fields };
+                return { categoryID, productID, status, price, description, bargain, title, phoneNumber, userName, pictures, fields };
             }));
 
             return { statusCode: statusCodes.OK, product: result[0] };
@@ -103,7 +105,7 @@ class ProductsService extends Service {
                 products = await DBQuery(`SELECT * FROM products WHERE status=1`);
             }
             const result = await Promise.all(products.map(async (product) => {
-                const { id: productID, category_id: categoryID, title, status, price, description, bargain, } = product;
+                const { id: productID, category_id: categoryID, title, status, price, description, bargain, phoneNumber, userName } = product;
                 const pictures = await DBQuery(`
                     SELECT * FROM productpictures WHERE product_id = ${connection.escape(productID)}
                 `);
@@ -115,7 +117,7 @@ class ProductsService extends Service {
                     WHERE fieldproducts.field_id=productfields.id
                 `);
 
-                return { categoryID, productID, status, price, description, bargain, title, pictures, fields };
+                return { categoryID, productID, status, price, description, bargain, title, phoneNumber, userName, pictures, fields };
             }));
 
             return { statusCode: statusCodes.OK, products: result };

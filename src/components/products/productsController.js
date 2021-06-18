@@ -30,7 +30,7 @@ class ProductsController extends AuthenticatedController {
         }
     }
     async create(req, res) {
-        const desiredColumns = [ "categoryID", "title", "fields", "price", "bargain", "pictures", "description" ];
+        const desiredColumns = [ "categoryID", "title", "fields", "price", "bargain", "pictures", "description", "phoneNumber", "userName" ];
 
         await super.create(req, res, desiredColumns);
 
