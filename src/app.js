@@ -6,7 +6,7 @@ const server = express();
 
 server.use(express.json())
     .use(cors())
-    .use("", router)
+    .use("/sml", router)
     .use(express.static("./images"));
 
 server.listen(process.env.PORT || 8000, () => {

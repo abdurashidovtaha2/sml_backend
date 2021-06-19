@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/users/login
+POST http://localhost:8000/sml/users/login
 # POST https://sml-backend.herokuapp.com/users/login
 Content-Type: application/json
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 ###
 # GET http://localhost:8000/products/categories
-GET  https://sml-backend.herokuapp.com/products/categories
+GET https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
@@ -76,8 +76,8 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 }
 
 ###
-GET http://localhost:8000/products
-# GET https://sml-backend.herokuapp.com/products
+# GET http://localhost:8000/products
+GET https://sml-backend.herokuapp.com/products
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 
@@ -91,8 +91,9 @@ GET http://localhost:8000/products/declined
 Authorization: dondon
 
 ###
-GET http://localhost:8000/products/que
-Authorization: dondon
+# GET http://localhost:8000/products/que
+GET https://sml-backend.herokuapp.com/products/que
+Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
 GET http://localhost:8000/products/admin
@@ -100,15 +101,17 @@ GET http://localhost:8000/products/admin
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
-PATCH  http://localhost:8000/products/admin/product
+# PATCH http://localhost:8000/products/admin/product
+PATCH https://sml-backend.herokuapp.com/products/admin/product
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 Content-Type: application/json
 
 {
-    "id": 5,
+    "id": 375,
     "value": 2
 }
 
 ###
-GET http://localhost:8000/products/single/365
+# GET http://localhost:8000/products/single/375
+GET https://sml-backend.herokuapp.com/products/single/375
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
