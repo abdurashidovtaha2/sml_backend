@@ -1,7 +1,7 @@
 const connection = require("../database");
 
 const compareArrays = ( firstArr, secArr ) => {
-    if (firstArr.sort().join('') !== secArr.sort().join('')) return false;
+    if (firstArr.map(a => a.toLowerCase()).sort().join('') !== secArr.map(a => a.toLowerCase()).sort().join('')) return false;
     return true;
 };
 

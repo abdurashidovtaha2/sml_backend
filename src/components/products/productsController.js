@@ -1,3 +1,4 @@
+const connection = require("../../database");
 const errorCodes = require("../../enums/errorCodes");
 const statusCodes = require("../../enums/statusCodes");
 const AuthenticatedController = require("../../shared/controllers/authenticated");
@@ -11,6 +12,7 @@ class ProductsController extends AuthenticatedController {
         this.getAllAdmin = this.getAllAdmin.bind(this);
         this.updateProductStatus = this.updateProductStatus.bind(this);
         this.insertPicture = this.insertPicture.bind(this);
+        this.create = this.create.bind(this);
     }
     async insertPicture(req, res) {
         try {
@@ -30,11 +32,21 @@ class ProductsController extends AuthenticatedController {
         }
     }
     async create(req, res) {
-        const desiredColumns = [ "categoryID", "title", "fields", "price", "bargain", "pictures", "description", "phoneNumber", "userName" ];
+        try {
+            const token = req.headers.authorization;
+            const userID = await this.service.checkToken(token);
+            const user = await DBQuery(`SELECT username FROM users WHERE id = ${connection.escape(userID)}`);
+            const { username } = user[0];
+            const desiredColumns = [ "categoryID", "title", "fields", "price", "bargain", "pictures", "description", "phoneNumber", "username" ];
+    
+            req.body = { ...req.body, userName: username };
 
-        await super.create(req, res, desiredColumns);
-
-        return;
+            await super.create(req, res, desiredColumns);
+    
+            return;
+        } catch (err) {
+            
+        }
     }
     async getAll(req, res, status, admin) {
         try {

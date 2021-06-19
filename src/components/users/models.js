@@ -1,3 +1,4 @@
+const connection = require("../../database");
 const DBQuery = require("../../utils/DBQuery");
 
 module.exports = async () => {
@@ -5,7 +6,7 @@ module.exports = async () => {
         const createUsersTable = `create table if not exists users(
             id int primary key auto_increment not null,
             email varchar(255) not null,
-            name varchar(255) not null,
+            username varchar(255) not null,
             surname varchar(255) DEFAULT "" not null,
             verified int DEFAULT 0 not null,
             password varchar(255) not null,
@@ -23,6 +24,7 @@ module.exports = async () => {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )`;
 
+        // await DBQuery('ALTER TABLE `users` CHANGE `name` `username` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL');
         await DBQuery(createUsersTable);
         await DBQuery(createTokensTable);
         await DBQuery(createUserVerificationCodesTable);

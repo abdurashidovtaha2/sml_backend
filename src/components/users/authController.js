@@ -10,7 +10,7 @@ class AuthController extends UnauthenticatedController {
         this.login = this.login.bind(this);
     }
     async create(req, res) {
-        const desiredColumns = [ "name", "surname", "email" ];
+        const desiredColumns = [ "username", "surname", "email" ];
 
         await super.create(req, res, desiredColumns);
 
@@ -37,4 +37,4 @@ class AuthController extends UnauthenticatedController {
     }
 }
 
-module.exports = new AuthController(authService);
+    module.exports = new AuthController(authService);

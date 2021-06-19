@@ -41,12 +41,11 @@ class AuthenticatedController {
 
                 userID = await this.service.checkToken(token);
             }
-
             let body = req.body;
             const columns = Object.keys(body);
             
             if (!compareArrays(columns, desiredColumns)) throw({ statusCode: statusCodes.BAD_REQUEST });
-
+            
             const message = await this.service.create(body, userID);
             
             return res.status(message.statusCode).send(message);

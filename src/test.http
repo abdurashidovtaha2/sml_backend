@@ -8,14 +8,13 @@ Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
 
-# POST http://localhost:8000/users/signup
-POST https://sml-backend.herokuapp.com/users/signup
+POST http://localhost:8000/users/signup
+# POST https://sml-backend.herokuapp.com/users/signup
 Content-Type: application/json
 
 {
-    "name": "taha",
-    "surname": "baha",
-    "email": "abdurashidovtaha2@gmail.com",
+    "userName": "taha",
+    "email": "abdurashidovtadsfhaY@yandex.com",
     "password": "hey"
 }
 
@@ -58,9 +57,7 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
     "bargain": true,
     "description": "Hama tenjay, tovar devonaashay",
     "phoneNumber": 91292192,
-    "userName": "xdta uxeli kardesti",
     "pictures": [
-        "picture-1623935529537.png"
     ],
     "fields": [
         {

@@ -5,6 +5,7 @@ const Service = require("../../shared/service");
 const sendEmail = require("../../utils/sendEmail");
 const errorCodes = require("../../enums/errorCodes");
 const statusCodes = require("../../enums/statusCodes");
+const environment = require("../../environment");
 
 class UsersService extends Service {
     constructor(...fields) {
@@ -22,7 +23,7 @@ class UsersService extends Service {
 
             const mail = await sendEmail(
                 email, "Нажмите на ссылку чтобы подвердить свою почту", "Подтверждение почты",
-                "Подтверждение почты", `localhost:3000/confirm/${verificationCode}`
+                "Подтверждение почты", `${environment.url}/confirm/${verificationCode}`
             );
 
             await DBQuery(`INSERT INTO userVerificationCodes (id, user_id) VALUES (${connection.escape(verificationCode)}, ${connection.escape(userID)})`);
