@@ -43,7 +43,7 @@ module.exports = (link, text, title, subject) => {
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td style="color: #333; font-size: 16px; font-family: 'arial', 'helvetica', sans-serif; padding: 10px 0 22px 0; line-height: 1.7em;">
-                                                                                        <a href="http://${link}" style="display: block; background: #0365ca; text-align: center; color: #fff; text-decoration: none; padding: 6px 0; border-radius: 5px;" title="Подтвердить почту">
+                                                                                        <a href="${link}" style="display: block; background: #0365ca; text-align: center; color: #fff; text-decoration: none; padding: 6px 0; border-radius: 5px;" title="Подтвердить почту">
                                                                                             ${title}
                                                                                         </a>
                                                                                     </td>
