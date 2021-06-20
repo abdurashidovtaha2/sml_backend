@@ -23,7 +23,7 @@ class UsersService extends Service {
 
             const mail = await sendEmail(
                 email, "Нажмите на ссылку чтобы подвердить свою почту", "Подтверждение почты",
-                "Подтверждение почты", `${environment.url}/confirmation/${email}/${verificationCode}`
+                "Подтверждение почты", `${environment.url}`
             );
 
             await DBQuery(`INSERT INTO userVerificationCodes (id, user_id) VALUES (${connection.escape(verificationCode)}, ${connection.escape(userID)})`);
