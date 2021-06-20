@@ -19,7 +19,7 @@ router.get("/declined", (req, res) => productsController.getAll(req, res, 3));
 
 router.get("/admin", productsController.getAllAdmin);
 
-router.patch("/admin/product", productsController.updateProductStatus);
+router.put("/admin/product", productsController.updateProductStatus);
 
 router.post("/picture", productsController.insertPicture)
 
