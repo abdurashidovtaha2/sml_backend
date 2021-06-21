@@ -21,6 +21,6 @@ router.get("/admin", productsController.getAllAdmin);
 
 router.put("/admin/product", productsController.updateProductStatus);
 
-router.post("/picture", productsController.insertPicture)
+router.post("/picture", productsController.insertPicture);
 
 module.exports = router;
