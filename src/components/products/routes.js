@@ -1,4 +1,5 @@
 const express = require("express");
+const DBQuery = require("../../utils/DBQuery");
 const productsController = require("./productsController");
 
 require("./models")();
@@ -22,5 +23,15 @@ router.get("/admin", productsController.getAllAdmin);
 router.put("/admin/product", productsController.updateProductStatus);
 
 router.post("/picture", productsController.insertPicture);
+
+router.delete("/all", async (req, res) => {
+    try {
+        await DBQuery(`DELETE FROM products`);
+
+        res.status(200).send({ statusCode: 200 });
+    } catch (err) {
+        res.status(500).send({ err, statusCode: 500 });
+    }
+})
 
 module.exports = router;
