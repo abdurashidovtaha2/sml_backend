@@ -45,8 +45,13 @@ GET https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-POST http://localhost:8000/products
-# POST https://sml-backend.herokuapp.com/products
+
+DELETE https://sml-backend.herokuapp.com/sml/products/all
+# Authorization: admin1982
+
+###
+# POST http://localhost:8000/products
+POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
@@ -77,7 +82,7 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
 # GET http://localhost:8000/products
-GET https://sml-backend.herokuapp.com/products
+GET https://sml-backend.herokuapp.com/sml/products
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 

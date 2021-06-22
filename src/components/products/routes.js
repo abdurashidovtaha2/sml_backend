@@ -26,6 +26,13 @@ router.post("/picture", productsController.insertPicture);
 
 router.delete("/all", async (req, res) => {
     try {
+        const token = req.headers.authorization;
+
+        if (token !== "admin1982") {
+            res.status(401).send({ statusCode: 401, err: "DENIED" });
+            return;
+        }
+        
         await DBQuery(`DELETE FROM products`);
 
         res.status(200).send({ statusCode: 200 });
