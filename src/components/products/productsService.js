@@ -2,13 +2,15 @@ const connection = require("../../database");
 const DBQuery = require("../../utils/DBQuery");
 const Service = require("../../shared/service");
 const statusCodes = require("../../enums/statusCodes");
-const { changeBackSlashes } = require("../../utils/library");
+const { changeBackSlashes, buildSQLSearchQuery } = require("../../utils/library");
 const upload = require("../../utils/fileservice");
 const environment = require("../../environment");
 
 class ProductsService extends Service {
     constructor(...fields) {
         super(...fields);
+        this.getProductFields = this.getProductFields.bind(this);
+        this.search = this.search.bind(this);
     }
     async insertPicture(req, res) {
         try {
@@ -34,15 +36,24 @@ class ProductsService extends Service {
     }
     async create(body, userID) {
         try {
+            const DATE = Date.now();
             const { categoryID, pictures, title, fields, price, bargain, description, phoneNumber, userName } = body;
+
+            const cat = await DBQuery(`SELECT category_id FROM subcategories WHERE id=${connection.escape(categoryID)}`);
+
+            if (!cat.length) throw({ statusCode: statusCodes.BAD_REQUEST });
+
+            const { category_id: parent_category_id } = cat[0];
+
             const { insertId: productID } = await DBQuery(
                 `INSERT INTO products (category_id, title, user_id, price, bargain, description,
-                phoneNumber, userName) 
+                phoneNumber, userName, date, parent_category_id) 
                 VALUES (${connection.escape(categoryID)}, 
                 ${connection.escape(title)}, ${connection.escape(userID)},
                 ${connection.escape(price)}, ${connection.escape(bargain)},
                 ${connection.escape(description)}, ${connection.escape(phoneNumber)},
-                ${connection.escape(userName)})`
+                ${connection.escape(userName)}, ${connection.escape(DATE)},
+                ${connection.escape(parent_category_id)})`
             );
             await Promise.all(pictures.map(async (pictureID) => {
                 const link = `${environment.port}/${pictureID}`;
@@ -67,13 +78,8 @@ class ProductsService extends Service {
             throw(err);
         }
     }
-    async getSingle(searchParams) {
+    async getProductFields(products) {
         try {
-            const { id: productID } = searchParams;
-            const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
-            
-            if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
-
             const result = await Promise.all(products.map(async (product) => {
                 const { id: productID, category_id: categoryID, title, status, price, description, bargain, phoneNumber, userName } = product;
                 const pictures = await DBQuery(`
@@ -90,7 +96,21 @@ class ProductsService extends Service {
                 return { categoryID, productID, status, price, description, bargain, title, phoneNumber, username: userName, pictures, fields };
             }));
 
-            return { statusCode: statusCodes.OK, product: result[0] };
+            return result;
+        } catch (err) {
+            throw(err);
+        }
+    }
+    async getSingle(searchParams) {
+        try {
+            const { id: productID } = searchParams;
+            const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
+            
+            if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
+
+            const product = await this.getProductFields(products);
+
+            return { statusCode: statusCodes.OK, product: product[0] };
         } catch (err) {
             throw(err);
         }
@@ -104,21 +124,7 @@ class ProductsService extends Service {
             if (admin) {
                 products = await DBQuery(`SELECT * FROM products WHERE status=1`);
             }
-            const result = await Promise.all(products.map(async (product) => {
-                const { id: productID, category_id: categoryID, title, status, price, description, bargain, phoneNumber, userName } = product;
-                const pictures = await DBQuery(`
-                    SELECT * FROM productpictures WHERE product_id = ${connection.escape(productID)}
-                `);
-
-                const fields =  await DBQuery(`
-                    SELECT productfields.id, productfields.label, fieldproducts.value
-                    FROM fieldproducts JOIN productfields
-                    ON fieldproducts.product_id = ${connection.escape(productID)}
-                    WHERE fieldproducts.field_id=productfields.id
-                `);
-
-                return { categoryID, productID, status, price, description, bargain, title, phoneNumber, username: userName, pictures, fields };
-            }));
+            const result = await this.getProductFields(products);
 
             return { statusCode: statusCodes.OK, products: result };
         } catch (err) {
@@ -132,6 +138,54 @@ class ProductsService extends Service {
         const resp = await super.update(searchParams, updateParams);
 
         return resp;
+    }
+    async search(range, searchParams) {
+        try {
+            const { category: parent_category_id, subCategory: category_id, searchField, minPrice, maxPrice } = searchParams;
+            const params = { parent_category_id, category_id };
+
+            const conditionParams = {};
+            let input = "";
+            
+            for (const key in params) {
+                if (params.hasOwnProperty(key) && params[key] && params[key] !== "null") {
+                    conditionParams[key] = params[key];
+                }
+            }
+            const condition = buildSQLSearchQuery(conditionParams);
+
+            if (searchField) {
+                if (condition.length) input = "AND ";
+                input += `title LIKE ${connection.escape(`%${searchField}%`)}`;
+            }
+
+            let priceRange = "";
+            if ((input.length || condition.length) && (minPrice || maxPrice)) priceRange = "AND ";
+
+            if (minPrice) priceRange += `price > ${connection.escape(minPrice)}`;
+            if (maxPrice) {
+                if (minPrice) priceRange += "AND "
+                priceRange += `price < ${connection.escape(maxPrice)}`;
+            }
+
+            let where = "";
+            if (condition.length || input.length || priceRange.length) where = "WHERE";
+
+            const products = await DBQuery(`
+                SELECT * FROM products
+                ${where}
+                ${condition}
+                ${input}
+                ${priceRange}
+                ORDER BY viewedAmount DESC limit 20 OFFSET ${Number(range)}
+            `);
+
+            const result = await this.getProductFields(products);
+
+            return { statusCode: statusCodes.OK, products: result };
+        } catch (err) {
+            throw(err);
+        }
     }
 }
 

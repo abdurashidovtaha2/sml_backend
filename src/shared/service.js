@@ -8,6 +8,8 @@ class Service {
         this.getSingle = this.getSingle.bind(this);
         this.checkToken = this.checkToken.bind(this);
         this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
         this.tableName = tableName;
         this.field = field;
     }
@@ -69,6 +71,17 @@ class Service {
             await DBQuery(`UPDATE ${this.tableName} SET ${statement} WHERE ${condition}`);
 
             return { statusCode: statusCodes.OK }
+        } catch (err) {
+            throw(err);
+        }
+    }
+    async delete(searchParams) {
+        try {
+            const condition = buildSQLSearchQuery(searchParams);
+
+            await DBQuery(`DELETE FROM ${this.tableName} WHERE ${condition}`);
+
+            return { statusCode: statusCodes.OK };
         } catch (err) {
             throw(err);
         }

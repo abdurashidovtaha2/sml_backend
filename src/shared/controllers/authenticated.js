@@ -6,6 +6,7 @@ class AuthenticatedController {
         this.getSingle = this.getSingle.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
         this.service = service;
     }
     async getSingle(req, res, fields, requestedColumns) {
@@ -68,6 +69,25 @@ class AuthenticatedController {
             }
             res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("controllers / authenticated UPD", err);
+        }
+    }
+    async delete(req, res, searchParams) {
+        try {
+            const token = req.headers.authorization;
+
+            const user_id = await this.service.checkToken(token);
+
+            searchParams = { ...searchParams, user_id };
+
+            const message = await this.service.delete(searchParams);
+
+            return res.status(message.statusCode).send(message);
+        } catch (err) {
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("controllers / authenticated DEL", err);
         }
     }
 }

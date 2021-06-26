@@ -12,6 +12,7 @@ class ProductsController extends AuthenticatedController {
         this.getAllAdmin = this.getAllAdmin.bind(this);
         this.updateProductStatus = this.updateProductStatus.bind(this);
         this.insertPicture = this.insertPicture.bind(this);
+        this.search = this.search.bind(this);
         this.create = this.create.bind(this);
     }
     async insertPicture(req, res) {
@@ -45,7 +46,11 @@ class ProductsController extends AuthenticatedController {
     
             return;
         } catch (err) {
-            
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("products / create", err);
         }
     }
     async getAll(req, res, status, admin) {
@@ -103,6 +108,39 @@ class ProductsController extends AuthenticatedController {
             }
             res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("products / changeproductstatus", err);
+        }
+    }
+    async delete(req, res) {
+        try {
+            const { id } = req.body;
+
+            const searchParams = { id };
+
+            await super.delete(req, res, searchParams);
+        } catch (err) {
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("products / delete", err);
+        }
+    }
+    async search(req, res) {
+        try {
+            const { subCategory, category, searchField, minPrice, maxPrice, range } = req.query;
+            const params = { subCategory, category, searchField, minPrice, maxPrice };
+            const token = req.headers.authorization;
+
+            await this.service.checkToken(token);
+
+            const message = await this.service.search(range, params);
+            return res.status(message.statusCode).send(message);
+        } catch (err) {
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("products / search", err);
         }
     }
 };

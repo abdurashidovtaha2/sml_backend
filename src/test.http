@@ -40,23 +40,23 @@ Content-Type: application/json
 }
 
 ###
-# GET http://localhost:8000/products/categories
-GET https://sml-backend.herokuapp.com/products/categories
+GET http://localhost:8000/sml/products/categories
+# GET https://sml-backend.herokuapp.com/products/categories
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
 
 DELETE https://sml-backend.herokuapp.com/sml/products/all
-# Authorization: admin1982
+Authorization: admin1982
 
 ###
-# POST http://localhost:8000/products
-POST https://sml-backend.herokuapp.com/products
+POST http://localhost:8000/sml/products
+# POST https://sml-backend.herokuapp.com/products
 Content-Type: application/json
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 {
-    "categoryID": 95,
+    "categoryID": 135,
     "title": "jaga",
     "price": "300000",
     "bargain": true,
@@ -66,24 +66,20 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
     ],
     "fields": [
         {
-            "id": 5,
+            "id": 65,
             "value": 1200
         },
         {
-            "id": 15,
-            "value": "20207 $"
-        },
-        {
-            "id": 25,
+            "id": 75,
             "value": "632 km/h"
         }
     ]
 }
 
 ###
-# GET http://localhost:8000/products
-GET https://sml-backend.herokuapp.com/sml/products
-Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
+GET http://localhost:8000/sml/products
+# GET https://sml-backend.herokuapp.com/sml/products
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 
 ###
@@ -117,6 +113,19 @@ Content-Type: application/json
 }
 
 ###
-# GET http://localhost:8000/products/single/375
-GET https://sml-backend.herokuapp.com/products/single/375
+GET http://localhost:8000/sml/products/single/675
+# GET https://sml-backend.herokuapp.com/products/single/545
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+
+###
+DELETE http://localhost:8000/sml/products
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+Content-Type: application/json
+
+{
+    "id": 535
+}
+
+###
+GET http://localhost:8000/sml/products/all?subCategory&category=275&searchField&minPrice=10000&maxPrice=1000000&range=0
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524

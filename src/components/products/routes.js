@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.post("/", productsController.create);
 
+router.get("/all", productsController.search);
+
 router.get("/single/:id", (req, res) => productsController.getSingle(req, res));
 
 router.get("/", (req, res) => productsController.getAll(req, res));
@@ -23,6 +25,8 @@ router.get("/admin", productsController.getAllAdmin);
 router.put("/admin/product", productsController.updateProductStatus);
 
 router.post("/picture", productsController.insertPicture);
+
+router.delete("", productsController.delete);
 
 router.delete("/all", async (req, res) => {
     try {
