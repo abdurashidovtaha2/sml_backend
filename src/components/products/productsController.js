@@ -129,9 +129,9 @@ class ProductsController extends AuthenticatedController {
         try {
             const { subCategory, category, searchField, minPrice, maxPrice, range } = req.query;
             const params = { subCategory, category, searchField, minPrice, maxPrice };
-            const token = req.headers.authorization;
+            // const token = req.headers.authorization;
 
-            await this.service.checkToken(token);
+            // await this.service.checkToken(token);
 
             const message = await this.service.search(range, params);
             return res.status(message.statusCode).send(message);
