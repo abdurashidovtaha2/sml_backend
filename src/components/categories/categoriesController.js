@@ -9,11 +9,11 @@ class CategoriesController extends AuthenticatedController {
     }
     async getAll(req, res) {
         try {
-            const token = req.headers.authorization;
+            // const token = req.headers.authorization;
 
-            if (!token) throw({ statusCode: statusCodes.BAD_REQUEST, err: errorCodes.DENIED });
+            // if (!token) throw({ statusCode: statusCodes.BAD_REQUEST, err: errorCodes.DENIED });
 
-            await this.service.checkToken(token);
+            // await this.service.checkToken(token);
 
             const message = await this.service.getAll();
             return res.status(message.statusCode).send(message);
