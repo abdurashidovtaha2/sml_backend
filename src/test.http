@@ -63,6 +63,7 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
     "description": "Hama tenjay, tovar devonaashay",
     "phoneNumber": 91292192,
     "pictures": [
+        "picture-1625035871554.jpg"
     ],
     "fields": [
         {
@@ -131,4 +132,5 @@ Content-Type: application/json
 GET https://sml-backend.herokuapp.com/sml/products/all?subCategory&category=275&searchField&minPrice=10000&maxPrice=1000000&range=0
 # Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
-
+###
+GET https://sml-backend.herokuapp.com/sml/testenv

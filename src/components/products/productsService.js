@@ -5,6 +5,7 @@ const statusCodes = require("../../enums/statusCodes");
 const { changeBackSlashes, buildSQLSearchQuery } = require("../../utils/library");
 const upload = require("../../utils/fileservice");
 const environment = require("../../environment");
+const { uploadFile, uploadFileS3 } = require("../../s3");
 
 class ProductsService extends Service {
     constructor(...fields) {
@@ -18,9 +19,12 @@ class ProductsService extends Service {
                 try {
                     if (err) {
                         throw({ statusCode: statusCodes.INTERNAL_ERROR , err });
-                    }                
+                    }
                     const imgName = req.file.filename;
-                    
+
+                    const response = await uploadFileS3(req.file);
+                    console.log(response);
+
                     res.status(statusCodes.OK).send({ imageID: imgName });
                 } catch (err) {
                     if (err.statusCode) {
@@ -56,7 +60,7 @@ class ProductsService extends Service {
                 ${connection.escape(parent_category_id)})`
             );
             await Promise.all(pictures.map(async (pictureID) => {
-                const link = `${environment.port}/${pictureID}`;
+                const link = `${environment.pictureLink}/${pictureID}`;
                 await DBQuery(
                     `INSERT INTO productPictures (id, link, product_id)
                     VALUES (${connection.escape(pictureID)}, ${connection.escape(link)},
