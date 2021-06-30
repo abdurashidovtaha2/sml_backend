@@ -2,10 +2,11 @@ const connection = require("../../database");
 const DBQuery = require("../../utils/DBQuery");
 const Service = require("../../shared/service");
 const statusCodes = require("../../enums/statusCodes");
-const { changeBackSlashes, buildSQLSearchQuery } = require("../../utils/library");
+const { changeBackSlashes, buildSQLSearchQuery, buildSQLUpdateQuery } = require("../../utils/library");
 const upload = require("../../utils/fileservice");
 const environment = require("../../environment");
 const { uploadFile, uploadFileS3 } = require("../../s3");
+const errorCodes = require("../../enums/errorCodes");
 
 class ProductsService extends Service {
     constructor(...fields) {
@@ -36,6 +37,46 @@ class ProductsService extends Service {
             });
         } catch (err) {
             throw({ statusCode: statusCodes.INTERNAL_ERROR , err });
+        }
+    }
+    async update(userID, body) {
+        try {
+            const { productID, title, price, bargain, phoneNumber, description, pictures, fields } = body;
+
+            const product = await DBQuery(`SELECT user_id FROM products WHERE id = ${connection.escape(productID)}`, true, "PRODUCT");
+            const { user_id: productUserID } = product[0];
+
+            if (userID !== productUserID) throw({ statusCode: statusCodes.FORBIDDEN, err: errorCodes.DENIED });
+
+            const updateProductParams = { title, price, bargain, phoneNumber, description };
+            const updateStatement = buildSQLUpdateQuery(updateProductParams);
+
+            await DBQuery(`UPDATE products SET ${updateStatement} WHERE id=${connection.escape(productID)}`);
+
+            await DBQuery(`DELETE FROM fieldProducts WHERE product_id=${connection.escape(productID)}`);
+            await DBQuery(`DELETE FROM productPictures WHERE product_id=${connection.escape(productID)}`);
+            await Promise.all(pictures.map(async (pictureID) => {
+                const link = `${environment.pictureLink}/${pictureID}`;
+
+                await DBQuery(
+                    `INSERT INTO productPictures (id, link, product_id)
+                    VALUES (${connection.escape(pictureID)}, ${connection.escape(link)},
+                    ${connection.escape(productID)})`
+                );
+            }));
+            await Promise.all(fields.map(async (field) => {
+                const { id: fieldID, value } = field;
+
+                await DBQuery(`
+                    INSERT INTO fieldProducts 
+                    (product_id, field_id, value)
+                    VALUES (${connection.escape(productID)}, ${connection.escape(fieldID)}, ${connection.escape(value)})`
+                );
+            }));
+
+            return { statusCode: 200 };
+        } catch (err) {
+            throw(err);
         }
     }
     async create(body, userID) {
@@ -109,6 +150,7 @@ class ProductsService extends Service {
         try {
             const { id: productID } = searchParams;
             const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
+            await DBQuery(`UPDATE products SET viewedAmount = viewedAmount + 1`);
             
             if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
 

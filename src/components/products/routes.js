@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.post("/", productsController.create);
 
+router.put("/", productsController.update);
+
 router.get("/all", productsController.search);
 
 router.get("/single/:id", (req, res) => productsController.getSingle(req, res));

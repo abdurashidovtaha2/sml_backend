@@ -3,6 +3,7 @@ const errorCodes = require("../../enums/errorCodes");
 const statusCodes = require("../../enums/statusCodes");
 const AuthenticatedController = require("../../shared/controllers/authenticated");
 const DBQuery = require("../../utils/DBQuery");
+const { compareArrays } = require("../../utils/library");
 const productsService = require("./productsService");
 
 class ProductsController extends AuthenticatedController {
@@ -14,6 +15,7 @@ class ProductsController extends AuthenticatedController {
         this.insertPicture = this.insertPicture.bind(this);
         this.search = this.search.bind(this);
         this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
     }
     async insertPicture(req, res) {
         try {
@@ -30,6 +32,29 @@ class ProductsController extends AuthenticatedController {
             }
             res.status(statusCodes.INTERNAL_ERROR).send("err");
             console.log("products / insert picture", err);
+        }
+    }
+    async update(req, res) {
+        try {
+            const token = req.headers.authorization;
+
+            if (!token) throw({ statusCode: statusCodes.FORBIDDEN });
+            
+            const { body } = req;
+            const desiredColumns = [ "productID", "title", "price", "bargain", "phoneNumber", "description", "pictures", "fields" ];
+
+            if (!(compareArrays(Object.keys(body), desiredColumns))) throw({ statusCode: statusCodes.BAD_REQUEST });
+
+            const userID = await this.service.checkToken(token);
+
+            const message = await this.service.update(userID, body);
+            res.status(message.statusCode).send(message);
+        } catch (err) {
+            if (err.statusCode) {
+                return res.status(err.statusCode).send(err);
+            }
+            res.status(statusCodes.INTERNAL_ERROR).send("err");
+            console.log("products / update", err);
         }
     }
     async create(req, res) {

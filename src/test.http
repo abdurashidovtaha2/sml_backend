@@ -3,7 +3,7 @@ GET https://sml-backend.herokuapp.com/users/token/6350fde7-f443-48d7-bcfb-0c2257
 
 ###
 
-GET http://localhost:8000/users/5
+GET http://localhost:8000/sml/users/5
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 ###
@@ -84,12 +84,12 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 
 ###
-GET http://localhost:8000/products/accepted
+GET http://localhost:8000/sml/products/accepted
 Authorization: 6350fde7-f443-48d7-bcfb-0c2257e32caa
 
 
 ###
-GET http://localhost:8000/products/declined
+GET http://localhost:8000/sml/products/declined
 Authorization: dondon
 
 ###
@@ -133,4 +133,27 @@ GET https://sml-backend.herokuapp.com/sml/products/all?subCategory&category=275&
 # Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-GET https://sml-backend.herokuapp.com/sml/testenv
+# PUT https://sml-backend.herokuapp.com/sml/products
+PUT http://localhost:8000/sml/products
+Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+Content-Type: application/json
+
+{
+    "productID": 705,
+    "title": "new title",
+    "price": 9999,
+    "bargain": false,
+    "phoneNumber": 949999191,
+    "description": "new Description",
+    "pictures" : [],
+    "fields": [
+        {
+            "id": 65,
+            "value": 1200
+        },
+        {
+            "id": 75,
+            "value": "NEW 999999 $"
+        }
+    ]
+}
