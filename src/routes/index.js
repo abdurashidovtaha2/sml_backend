@@ -5,11 +5,11 @@ const ProductsRouter = require("../components/products/routes");
 
 const router = express.Router();
 
-router.use("/testenv", (req, res) => {
+router.get("/testenv", (req, res) => {
     try {
         const h = process.env.ENV_TEST;
         console.log(h);
-        
+
         res.status(200).send({resp: h});
     } catch (err) {
         console.log("error", err);
