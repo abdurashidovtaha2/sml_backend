@@ -38,9 +38,9 @@ module.exports = async () => {
         // await DBQuery(`ALTER TABLE products ADD FOREIGN KEY (parent_category_id) REFERENCES categories(id);`); 
         // SELECT * FROM products ORDER BY price DESC limit 5 OFFSET 2
         
-        await DBQuery(createProductsTable);
-        await DBQuery(createFieldProductsTable);
-        await DBQuery(createProductPicturesTable);
+        // await DBQuery(createProductsTable);
+        // await DBQuery(createFieldProductsTable);
+        // await DBQuery(createProductPicturesTable);
     } catch (err) {
         console.log(" products / models ", err);
     }

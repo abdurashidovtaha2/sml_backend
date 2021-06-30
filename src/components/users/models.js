@@ -25,9 +25,9 @@ module.exports = async () => {
         )`;
 
         // await DBQuery('ALTER TABLE `users` CHANGE `name` `username` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL');
-        await DBQuery(createUsersTable);
-        await DBQuery(createTokensTable);
-        await DBQuery(createUserVerificationCodesTable);
+        // await DBQuery(createUsersTable);
+        // await DBQuery(createTokensTable);
+        // await DBQuery(createUserVerificationCodesTable);
     } catch (err) {
         console.log("users / models ", err);
     }

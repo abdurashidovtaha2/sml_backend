@@ -19,9 +19,9 @@ module.exports = async () => {
             FOREIGN KEY (subcategory_id) REFERENCES subCategories(id) ON DELETE CASCADE
         )`;
 
-        await DBQuery(createCategoriesTable);
-        await DBQuery(createSubCategoriesTable);
-        await DBQuery(createProductFieldsTable);
+        // await DBQuery(createCategoriesTable);
+        // await DBQuery(createSubCategoriesTable);
+        // await DBQuery(createProductFieldsTable);
         
         // await DBQuery(enterMockData);
         // await DBQuery(`INSERT INTO categories (label) VALUES ("Транспорт")`);

@@ -1,3 +1,5 @@
+const DBQuery = require("./utils/DBQuery");
+
 const environment = {
     port: "https://sml-backend.herokuapp.com",
     url: "https://elegant-nightingale-be6767.netlify.app"
