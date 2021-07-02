@@ -223,7 +223,7 @@ class ProductsService extends Service {
                 ${condition}
                 ${input}
                 ${priceRange}
-                ORDER BY viewedAmount DESC limit 10 OFFSET ${Number(range)}
+                ORDER BY viewedAmount DESC limit 10 OFFSET ${Number(range)*10}
             `);
 
             const result = await this.getProductFields(products);

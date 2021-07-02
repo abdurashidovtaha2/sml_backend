@@ -80,7 +80,6 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 ###
 # GET http://localhost:8000/sml/products
 GET https://sml-backend.herokuapp.com/sml/products
-Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 
 ###
@@ -127,8 +126,8 @@ Content-Type: application/json
 }
 
 ###
-# GET http://localhost:8000/sml/products/all?subCategory&category=275&searchField&minPrice=10000&maxPrice=1000000&range=0
-GET https://sml-backend.herokuapp.com/sml/products/all?subCategory&category=275&searchField&minPrice=10000&maxPrice=1000000&range=0
+GET http://localhost:8000/sml/products/all?subCategory&category&searchField&minPrice&maxPrice&range=1
+# GET https://sml-backend.herokuapp.com/sml/products/all?subCategory=&category=&searchField&minPrice=10000&maxPrice=1000000&range=1
 # Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
