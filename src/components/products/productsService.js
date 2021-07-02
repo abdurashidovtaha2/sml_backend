@@ -190,7 +190,7 @@ class ProductsService extends Service {
             const { category: parent_category_id, subCategory: category_id, searchField, minPrice, maxPrice } = searchParams;
             const params = { parent_category_id, category_id };
 
-            const conditionParams = {};
+            const conditionParams = { status: 2 };
             let input = "";
             
             for (const key in params) {
