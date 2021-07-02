@@ -9,17 +9,22 @@ class AuthenticatedController {
         this.delete = this.delete.bind(this);
         this.service = service;
     }
-    async getSingle(req, res, fields, requestedColumns) {
+    async getSingle(req, res, fields, requestedColumns, skipTokenCheck = false) {
         try {
-            const token = req.headers.authorization;
             const { id } = req.params;
             
-            if ((!id && !fields) || !token) throw({ statusCode: statusCodes.BAD_REQUEST, err: "WRONG_FIELD_SENT" });
+            if ((!id && !fields)) throw({ statusCode: statusCodes.BAD_REQUEST, err: "WRONG_FIELD_SENT" });
+
+            if (!skipTokenCheck) {
+                const token = req.headers.authorization;
+    
+                if (!token) throw({ statusCode: 401, err: "WRONG_FIELD_SENT" });
+
+                await this.service.checkToken(token);
+            }
             
             const searchParams = (fields || { id });
             if (!requestedColumns) requestedColumns = [ "*" ];
-
-            await this.service.checkToken(token);
             
             const message = await this.service.getSingle(searchParams, requestedColumns);
 

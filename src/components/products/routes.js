@@ -12,7 +12,7 @@ router.put("/", productsController.update);
 
 router.get("/all", productsController.search);
 
-router.get("/single/:id", (req, res) => productsController.getSingle(req, res));
+router.get("/single/:id", (req, res) => productsController.getSingle(req, res, null, null, true));
 
 router.get("/", (req, res) => productsController.getAll(req, res));
 

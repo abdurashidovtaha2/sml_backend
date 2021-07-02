@@ -78,8 +78,8 @@ Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 }
 
 ###
-GET http://localhost:8000/sml/products
-# GET https://sml-backend.herokuapp.com/sml/products
+# GET http://localhost:8000/sml/products
+GET https://sml-backend.herokuapp.com/sml/products
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 
@@ -114,9 +114,8 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8000/sml/products/single/675
-# GET https://sml-backend.herokuapp.com/products/single/545
-Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
+GET http://localhost:8000/sml/products/single/695
+# GET https://sml-backend.herokuapp.com/sml/products/single/695
 
 ###
 DELETE http://localhost:8000/sml/products
@@ -133,8 +132,8 @@ GET https://sml-backend.herokuapp.com/sml/products/all?subCategory&category=275&
 # Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 
 ###
-# PUT https://sml-backend.herokuapp.com/sml/products
-PUT http://localhost:8000/sml/products
+PUT https://sml-backend.herokuapp.com/sml/products
+# PUT http://localhost:8000/sml/products
 Authorization: 7f7fd056-32f1-4cf5-a123-f8496b4fb524
 Content-Type: application/json
 
@@ -153,7 +152,7 @@ Content-Type: application/json
         },
         {
             "id": 75,
-            "value": "NEW 999999 $"
+            "value": "NEW 9999121299 $"
         }
     ]
 }
