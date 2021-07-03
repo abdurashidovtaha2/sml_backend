@@ -150,7 +150,7 @@ class ProductsService extends Service {
         try {
             const { id: productID } = searchParams;
             const products = await DBQuery(`SELECT * FROM products WHERE id=${connection.escape(productID)}`);
-            await DBQuery(`UPDATE products SET viewedAmount = viewedAmount + 1`);
+            await DBQuery(`UPDATE products SET viewedAmount = viewedAmount + 1 WHERE id=${connection.escape(productID)}`);
             
             if (!products.length) return { statusCode: statusCodes.NOT_FOUND };
 

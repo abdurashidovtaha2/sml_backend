@@ -41,6 +41,7 @@ module.exports = async () => {
         // await DBQuery(createProductsTable);
         // await DBQuery(createFieldProductsTable);
         // await DBQuery(createProductPicturesTable);
+        console.log(await DBQuery(`SELECT * FROM products WHERE status=2`));
     } catch (err) {
         console.log(" products / models ", err);
     }
