@@ -6,15 +6,11 @@ require("./models")();
 
 const router = express.Router();
 
-router.post("/", productsController.create);
-
-router.put("/", productsController.update);
+router.get("/", (req, res) => productsController.getAll(req, res));
 
 router.get("/all", productsController.search);
 
 router.get("/single/:id", (req, res) => productsController.getSingle(req, res, null, null, true));
-
-router.get("/", (req, res) => productsController.getAll(req, res));
 
 router.get("/que", (req, res) => productsController.getAll(req, res, 1));
 
@@ -24,11 +20,18 @@ router.get("/declined", (req, res) => productsController.getAll(req, res, 3));
 
 router.get("/admin", productsController.getAllAdmin);
 
-router.put("/admin/product", productsController.updateProductStatus);
+
+router.post("/", productsController.create);
 
 router.post("/picture", productsController.insertPicture);
 
-router.delete("", productsController.delete);
+
+router.put("/", productsController.update);
+
+router.put("/admin/product", productsController.updateProductStatus);
+
+
+router.delete("/", productsController.delete);
 
 router.delete("/all", async (req, res) => {
     try {

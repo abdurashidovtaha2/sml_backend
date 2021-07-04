@@ -187,7 +187,7 @@ class ProductsService extends Service {
     }
     async search(range, searchParams) {
         try {
-            const { category: parent_category_id, subCategory: category_id, searchField, minPrice, maxPrice } = searchParams;
+            const { category: parent_category_id, subCategory: category_id, searchField, minPrice, maxPrice, getAllBeforeRange } = searchParams;
             const params = { parent_category_id, category_id };
 
             const conditionParams = { status: 2 };
@@ -223,7 +223,12 @@ class ProductsService extends Service {
                 ${condition}
                 ${input}
                 ${priceRange}
-                ORDER BY viewedAmount DESC limit 10 OFFSET ${Number(range)*10}
+                ORDER BY viewedAmount DESC
+                ${getAllBeforeRange ? 
+                    `LIMIT ${Number(range)*10+10} OFFSET 0 `
+                    :
+                     `LIMIT 10 OFFSET ${Number(range)*10}`
+                }
             `);
 
             const result = await this.getProductFields(products);

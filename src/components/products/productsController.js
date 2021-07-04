@@ -152,8 +152,8 @@ class ProductsController extends AuthenticatedController {
     }
     async search(req, res) {
         try {
-            const { subCategory, category, searchField, minPrice, maxPrice, range } = req.query;
-            const params = { subCategory, category, searchField, minPrice, maxPrice };
+            const { subCategory, category, searchField, minPrice, maxPrice, range, getAllBeforeRange } = req.query;
+            const params = { subCategory, category, searchField, minPrice, maxPrice, getAllBeforeRange };
             // const token = req.headers.authorization;
 
             // await this.service.checkToken(token);
