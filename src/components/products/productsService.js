@@ -216,7 +216,7 @@ class ProductsService extends Service {
 
             let where = "";
             if (condition.length || input.length || priceRange.length) where = "WHERE";
-
+            
             const products = await DBQuery(`
                 SELECT * FROM products
                 ${where}
@@ -224,7 +224,7 @@ class ProductsService extends Service {
                 ${input}
                 ${priceRange}
                 ORDER BY viewedAmount DESC
-                ${getAllBeforeRange ? 
+                ${(getAllBeforeRange === "true" || getAllBeforeRange === true) ? 
                     `LIMIT ${Number(range)*10+10} OFFSET 0 `
                     :
                      `LIMIT 10 OFFSET ${Number(range)*10}`
